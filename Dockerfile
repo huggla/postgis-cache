@@ -2,8 +2,8 @@ FROM mdillon/postgis:10-alpine
 
 COPY ./docker-entrypoint-initdb.d/x01.cache.sh /docker-entrypoint-initdb.d/x01.cache.sh
 
-RUN chown postgres:postgres /docker-entrypoint-initdb.d/x01.cache.sh
-chmod ugo+x /docker-entrypoint-initdb.d/x01.cache.sh
+RUN chown postgres:postgres /docker-entrypoint-initdb.d/x01.cache.sh \
+ && chmod ugo+x /docker-entrypoint-initdb.d/x01.cache.sh
  
 ENV PGDATA /tmp/pgdata
 ENV USER reader
