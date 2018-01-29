@@ -31,11 +31,16 @@ IFS=, read -ra fschemas_array <<< "$FOREIGN_SERVER_SCHEMAS"
 for fschema in "${fschemas_array[@]}"
 do
    eval 'foreign_server_schema_tables=$'"$fschema"
+   if [ -n "$foreign_server_schema_tables" ]
+   then 
+      limitstr="LIMIT TO ($foreign_server_schema_tables)"
+   fi
+   ftable_schema=$fschema"_foreign"
    psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" "$DATABASE" <<-___EOSQL
-      CREATE SCHEMA "$fschema_foreign" AUTHORIZATION "$POSTGRES_USER";
-      GRANT USAGE ON SCHEMA "$fschema_foreign" TO "$USER";
-      ALTER DEFAULT PRIVILEGES IN SCHEMA "$fschema_foreign" GRANT SELECT ON TABLES TO "$USER";
-      IMPORT FOREIGN SCHEMA "$fschema" LIMIT TO ($foreign_server_schema_tables) FROM SERVER "$FOREIGN_SERVER_NAME" INTO "$fschema_foreign";
+      CREATE SCHEMA $ftable_schema AUTHORIZATION "$POSTGRES_USER";
+      GRANT USAGE ON SCHEMA $ftable_schema TO "$USER";
+      ALTER DEFAULT PRIVILEGES IN SCHEMA $ftable_schema GRANT SELECT ON TABLES TO "$USER";
+      IMPORT FOREIGN SCHEMA "$fschema" $limitstr FROM SERVER "$FOREIGN_SERVER_NAME" INTO $ftable_schema;
       CREATE SCHEMA "$fschema" AUTHORIZATION "$POSTGRES_USER";
       GRANT USAGE ON SCHEMA "$fschema" TO "$USER";
       ALTER DEFAULT PRIVILEGES IN SCHEMA "$fschema" GRANT SELECT ON TABLES TO "$USER";
