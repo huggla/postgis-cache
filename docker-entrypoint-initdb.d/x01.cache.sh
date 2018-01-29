@@ -32,7 +32,10 @@ for fschema in "${fschemas_array[@]}"
 do
    eval 'foreign_server_schema_tables=$'"$fschema"
    psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" "$DATABASE" <<-___EOSQL
-      IMPORT FOREIGN SCHEMA "$fschema" LIMIT TO ($foreign_server_schema_tables) FROM SERVER "$FOREIGN_SERVER_NAME" INTO "$SCHEMA";
+      CREATE SCHEMA "$fschema_foreign" AUTHORIZATION "$POSTGRES_USER";
+      GRANT USAGE ON SCHEMA "$fschema_foreign" TO "$USER";
+      ALTER DEFAULT PRIVILEGES IN SCHEMA "$fschema_foreign" GRANT SELECT ON TABLES TO "$USER";
+      IMPORT FOREIGN SCHEMA "$fschema" LIMIT TO ($foreign_server_schema_tables) FROM SERVER "$FOREIGN_SERVER_NAME" INTO "$fschema_foreign";
       CREATE SCHEMA "$fschema" AUTHORIZATION "$POSTGRES_USER";
       GRANT USAGE ON SCHEMA "$fschema" TO "$USER";
       ALTER DEFAULT PRIVILEGES IN SCHEMA "$fschema" GRANT SELECT ON TABLES TO "$USER";
@@ -40,6 +43,6 @@ ___EOSQL
    IFS=, read -ra ftables_array <<< "$foreign_server_schema_tables"
    for ftable in "${ftables_array[@]}"
    do
-      psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" "$DATABASE" -c "CREATE MATERIALIZED VIEW $fschema.$ftable AS SELECT * FROM $SCHEMA.$ftable WITH DATA;"
+      psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" "$DATABASE" -c "CREATE MATERIALIZED VIEW $fschema.$ftable AS SELECT * FROM $fschema_foreign.$ftable WITH DATA;"
    done
 done
