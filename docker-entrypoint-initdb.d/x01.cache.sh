@@ -45,6 +45,10 @@ do
       GRANT USAGE ON SCHEMA "$fschema" TO "$USER";
       ALTER DEFAULT PRIVILEGES IN SCHEMA "$fschema" GRANT SELECT ON TABLES TO "$USER";
 ___EOSQL
+   if [ -z "$foreign_server_schema_tables" ]
+   then
+      foreign_server_schema_tables=`psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" "$DATABASE" -c "SELECT table_name FROM information_schema.tables WHERE table_schema='$fschema'"`
+   fi   
    IFS=, read -ra ftables_array <<< "$foreign_server_schema_tables"
    for ftable in "${ftables_array[@]}"
    do
