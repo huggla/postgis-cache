@@ -1,6 +1,19 @@
 FROM mdillon/postgis:10-alpine
 
-RUN mkdir -m 700 /tmp/pgdata \
- && chown postgres:postgres /tmp/pgdata
+COPY ./docker-entrypoint-initdb.d/x01.cache.sh /docker-entrypoint-initdb.d/x01.cache.sh
+
+RUN mkdir -m 777 /tmp/pgdata \
+ && chmod ugo+x /docker-entrypoint-initdb.d/x01.cache.sh
  
 ENV PGDATA /tmp/pgdata
+ENV USER reader
+ENV USER_PASSWORD read
+ENV DATABASE cache
+ENV SCHEMA foreign_data
+ENV FOREIGN_SERVER_NAME foreign_server
+ENV FOREIGN_SERVER_ADDRESS
+ENV FOREIGN_SERVER_PORT 5432
+ENV FOREIGN_SERVER_USER
+ENV FOREIGN_SERVER_USER_PASSWORD
+ENV FOREIGN_SERVER_DATABASE
+ENV FOREIGN_SERVER_SCHEMAS
