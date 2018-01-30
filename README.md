@@ -1,14 +1,14 @@
 # postgis-cache
-Docker image that creates a cache of foreign postgis tables. The cache consists of a database with materialized views stored in ram.
+Docker image that creates a cache of foreign Postgis tables. The cache consists of a database with materialized views stored in ram.
 
 ## Environment variables
 ### pre-set variables (can be set at runtime)
 PGDATA (/tmp/pgdata): Where the cache database is stored inside the container.
 USER (reader): Name of database user with read access to the cache database.
 USER_PASSWORD (read): Password for USER.
-DATABASE cache                      # Container database name
-ENV FOREIGN_SERVER_NAME foreign_server  # Container database foreign server name
-ENV FOREIGN_SERVER_PORT 5432            # Foreign server database port
+DATABASE (cache): Name of the container Postgis database.
+FOREIGN_SERVER_NAME (foreign_server): Name of the foreign server in the container Postgis database.
+ENV FOREIGN_SERVER_PORT (5432): The database port on the source database.
 
 # Mandatory runtime variables
 # ---------------------------
