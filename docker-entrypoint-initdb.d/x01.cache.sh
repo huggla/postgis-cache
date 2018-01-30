@@ -36,6 +36,7 @@ do
       limitstr="LIMIT TO ($foreign_server_schema_tables)"
    fi
    ftable_schema=$fschema"_foreign"
+   echo "IMPORT FOREIGN SCHEMA \"$fschema\" $limitstr FROM SERVER \"$FOREIGN_SERVER_NAME\" INTO $ftable_schema;"
    psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" "$DATABASE" <<-___EOSQL
       CREATE SCHEMA $ftable_schema AUTHORIZATION "$POSTGRES_USER";
       GRANT USAGE ON SCHEMA $ftable_schema TO "$USER";
