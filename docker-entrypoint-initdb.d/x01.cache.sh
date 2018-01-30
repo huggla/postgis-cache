@@ -51,9 +51,9 @@ ___EOSQL
    echo $foreign_server_schema_tables
    if [ -z "$foreign_server_schema_tables" ]
    then
-      echo "psql -q -A -t -R , -v ON_ERROR_STOP=1 --username \"$POSTGRES_USER\" \"$DATABASE\" -c \"SELECT table_name FROM information_schema.tables WHERE table_schema='$fschema'\""
-      psql -q -A -t -R , -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" "$DATABASE" -c "SELECT table_name FROM information_schema.tables WHERE table_schema='$fschema'"
-      foreign_server_schema_tables=`psql -q -A -t -R , -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" "$DATABASE" -c "SELECT table_name FROM information_schema.tables WHERE table_schema='$fschema'"`
+      echo "psql -q -A -t -R , -v ON_ERROR_STOP=1 --username \"$POSTGRES_USER\" \"$DATABASE\" -c \"SELECT table_name FROM information_schema.tables WHERE table_schema='$ftable_schema'\""
+      psql -q -A -t -R , -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" "$DATABASE" -c "SELECT table_name FROM information_schema.tables WHERE table_schema='$ftable_schema'"
+      foreign_server_schema_tables=`psql -q -A -t -R , -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" "$DATABASE" -c "SELECT table_name FROM information_schema.tables WHERE table_schema='$ftable_schema'"`
       echo $foreign_server_schema_tables
    fi   
    IFS=, read -ra ftables_array <<< "$foreign_server_schema_tables"
