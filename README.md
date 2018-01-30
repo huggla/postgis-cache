@@ -4,12 +4,12 @@ The cache consists of a database with materialized views stored in ram.
 
 ## Environment variables
 ### pre-set variables (can be set at runtime)
-PGDATA (/tmp/pgdata): Where the cache database is stored inside the container.
-USER (reader): Name of database user with read access to the cache database.
-USER_PASSWORD (read): Password for USER.
-DATABASE (cache): Name of the container Postgis database.
-FOREIGN_SERVER_NAME (foreign_server): Name of the foreign server in the cache database.
-ENV FOREIGN_SERVER_PORT (5432): The database port on the source database.
+* PGDATA (/tmp/pgdata): Where the cache database is stored inside the container.
+* USER (reader): Name of database user with read access to the cache database.
+* USER_PASSWORD (read): Password for USER.
+* DATABASE (cache): Name of the container Postgis database.
+* FOREIGN_SERVER_NAME (foreign_server): Name of the foreign server in the cache database.
+* ENV FOREIGN_SERVER_PORT (5432): The database port on the source database.
 
 ### Mandatory runtime variables
 FOREIGN_SERVER_ADDRESS: Network address to the source Postgis server.
