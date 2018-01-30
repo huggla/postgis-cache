@@ -19,7 +19,7 @@ FOREIGN_SERVER_USER_PASSWORD: Password for FOREIGN_SERVER_USER.
 FOREIGN_SERVER_SCHEMAS: Comma-separated list of source schemas that contains tables to cache.
 
 ### Optional runtime variables
-<schema>: Comma-separated sub-set of tables in <schema> to cache.
+\<schema\>: Comma-separated sub-set of tables in \<schema\> to cache.
 USER_PASSWORD_FILE: File containing the password for USER.
 FOREIGN_SERVER_USER_PASSWORD_FILE: File containing the password for FOREIGN_SERVER_USER.
 ADDITIONAL_CONFIGURATION: Semi colon-separated list of bash commands to run during database init.
