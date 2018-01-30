@@ -34,6 +34,8 @@ do
    if [ -n "$foreign_server_schema_tables" ]
    then 
       limitstr="LIMIT TO ($foreign_server_schema_tables)"
+   else
+      limitstr=""
    fi
    ftable_schema=$fschema"_foreign"
    echo "IMPORT FOREIGN SCHEMA \"$fschema\" $limitstr FROM SERVER \"$FOREIGN_SERVER_NAME\" INTO $ftable_schema;"
@@ -56,3 +58,4 @@ ___EOSQL
       psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" "$DATABASE" -c "CREATE MATERIALIZED VIEW $fschema.$ftable AS SELECT * FROM $ftable_schema.$ftable WITH DATA;"
    done
 done
+$ADDITIONAL_CONFIGURATION
