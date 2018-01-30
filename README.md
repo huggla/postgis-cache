@@ -26,4 +26,11 @@ Docker image that creates a cache of foreign Postgis tables. The cache consists 
 ### Additional variables
 Check out the postgres base image documentation, https://hub.docker.com/_/postgres/.
 
-(mount a volume if you prefer file cache).
+## Volumes
+* Mount a volume at PGDATA if you prefer caching to disk.
+* Mounting an empty folder on your host to /var/lib/postgresql/data prevents creation of an unnecessary volume.
+
+## Tips
+Example of ADDITIONAL_CONFIGURATION:
+...
+echo "ssl = on" >> "$PGDATA/postgresql.conf"; echo "ssl_cert_file = '/run/secrets/ssl-cert-snakeoil.pem'" >> "$PGDATA/postgresql.conf"; echo "ssl_key_file = '/run/secrets/ssl-cert-snakeoil.key'" >> "$PGDATA/postgresql.conf"; head -n -1 "$PGDATA/pg_hba.conf" > /tmp/pg_hba.conf; mv /tmp/pg_hba.conf "$PGDATA/pg_hba.conf"; echo "hostssl all reader all trust" >> "$PGDATA/pg_hba.conf"; psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" -c "SET TIME ZONE 'Europe/Stockholm';"
