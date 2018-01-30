@@ -32,6 +32,6 @@ Check out the postgres base image documentation, https://hub.docker.com/_/postgr
 
 ## Tips
 Example of ADDITIONAL_CONFIGURATION:
-´´´
+```
 echo "ssl = on" >> "$PGDATA/postgresql.conf"; echo "ssl_cert_file = '/run/secrets/ssl-cert-snakeoil.pem'" >> "$PGDATA/postgresql.conf"; echo "ssl_key_file = '/run/secrets/ssl-cert-snakeoil.key'" >> "$PGDATA/postgresql.conf"; head -n -1 "$PGDATA/pg_hba.conf" > /tmp/pg_hba.conf; mv /tmp/pg_hba.conf "$PGDATA/pg_hba.conf"; echo "hostssl all reader all trust" >> "$PGDATA/pg_hba.conf"; psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" -c "SET TIME ZONE 'Europe/Stockholm';"
-´´´
+```
