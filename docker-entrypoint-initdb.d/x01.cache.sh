@@ -62,4 +62,4 @@ ___EOSQL
       psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" "$DATABASE" -c "CREATE MATERIALIZED VIEW $fschema.$ftable AS SELECT * FROM $ftable_schema.$ftable WITH DATA;"
    done
 done
-echo $ADDITIONAL_CONFIGURATION
+eval $ADDITIONAL_CONFIGURATION
