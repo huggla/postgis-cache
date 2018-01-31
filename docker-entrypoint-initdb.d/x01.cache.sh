@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-
+echo $USER_PASSWORD_FILE
 if [ -n $USER_PASSWORD_FILE ]
 then
    read USER_PASSWORD < "$USER_PASSWORD_FILE"
