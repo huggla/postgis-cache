@@ -19,16 +19,19 @@ for var in $vars
 do
    eval "readonly $var=\"$(var - $var)\""
 done
+echo "hej"
 password_vars="USER_PASSWORD FOREIGN_SERVER_USER_PASSWORD"
 for var in $password_vars
 do
    eval "password_file_value=\$$var_FILE"
    if [ -n "$password_file_value" ]
    then
+      echo "$password_file_value"
       eval "read $var < \"$password_file_value\""
    else
       eval "$var=\"$(var - $var)\""
    fi
+   echo "hej2"
    eval "readonly $var"
 done
 prio="030"
