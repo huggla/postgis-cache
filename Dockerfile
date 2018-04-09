@@ -1,4 +1,4 @@
-FROM huggla/postgis-alpine
+FROM huggla/postgis-alpine:20180409
 
 USER root
 
