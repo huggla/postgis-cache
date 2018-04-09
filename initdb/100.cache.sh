@@ -77,4 +77,3 @@ do
    done
 done
 IFS=$IFS_tmp
-eval $ADDITIONAL_CONFIGURATION
