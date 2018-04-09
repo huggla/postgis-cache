@@ -35,10 +35,7 @@ prio="030"
 dbname="postgres"
 sql_file="$sql_dir/$prio.$dbname.sql"
 echo "CREATE USER \"$USER\" WITH LOGIN NOINHERIT VALID UNTIL 'infinity' PASSWORD '$USER_PASSWORD';" > "$sql_file"
-echo "CREATE DATABASE \"$DATABASE\" WITH OWNER = \"postgres\";" >> "$sql_file"
-
-# TEMPLATE=template_postgis;
-
+echo "CREATE DATABASE \"$DATABASE\" WITH OWNER = \"postgres\" TEMPLATE=template_postgis;" >> "$sql_file"
 echo "CREATE EXTENSION postgres_fdw;" >> "$sql_file"
 echo "CREATE SERVER \"$FOREIGN_SERVER_NAME\" FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host '$FOREIGN_SERVER_ADDRESS', dbname '$FOREIGN_SERVER_DATABASE', port '$FOREIGN_SERVER_PORT');" >> "$sql_file"
 echo "ALTER SERVER \"$FOREIGN_SERVER_NAME\" OPTIONS (ADD updatable 'false');" >> "$sql_file"
