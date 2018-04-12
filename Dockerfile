@@ -3,6 +3,6 @@ FROM huggla/postgres-cache
 
 USER root
 
-COPY --from=postgis-alpine ./initdb "$CONFIG_DIR/initdb"
+COPY --from=postgis-alpine "$CONFIG_DIR/initdb" "$CONFIG_DIR/initdb"
 
 USER sudoer
