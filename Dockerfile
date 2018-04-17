@@ -1,5 +1,5 @@
-FROM huggla/postgres-cache AS postgres-cache
-FROM huggla/postgis-alpine
+FROM huggla/postgres-cache:20180417 AS postgres-cache
+FROM huggla/postgis-alpine:20180417
 
 USER root
 
